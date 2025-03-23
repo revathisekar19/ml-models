@@ -101,4 +101,19 @@ def load_and_run_naive_bayes(file_path, target_column):
 # ----------------------
 
 if __name__ == "__main__":
+
+    #for Heart Failure dataset
     load_and_run_naive_bayes("datasets/heart_failure_clinical_records_dataset.csv", "DEATH_EVENT")
+
+    #for Robot Execution Failures dataset
+    load_and_run_naive_bayes("datasets/robot_execution_failures_dataset.csv","Class")
+
+    #for Wisconsin Diagnostic Breast Cancer dataset
+    load_and_run_naive_bayes("datasets/wisconsin_diagnostic_breast_cancer_dataset.csv","Diagnosis")
+
+    #for Mushroom dataset
+    load_and_run_naive_bayes("datasets/mushroom_dataset.csv","class")
+
+    #for Glass dataset
+    load_and_run_naive_bayes("datasets/glass_details_dataset.csv","Class")
+    

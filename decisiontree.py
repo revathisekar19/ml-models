@@ -1,9 +1,7 @@
 import pandas as pd
 import numpy as np
 
-# -------------------------
-# Tree Node Structure
-# -------------------------
+
 class DecisionTreeNode:
     def __init__(self, feature_index=None, threshold=None, left=None, right=None, value=None):
         self.feature_index = feature_index
@@ -12,9 +10,7 @@ class DecisionTreeNode:
         self.right = right
         self.value = value
 
-# -------------------------
-# Decision Tree Class
-# -------------------------
+
 class DecisionTree:
     def __init__(self, task, max_depth=10, min_samples_split=2):
         self.task = task
@@ -101,10 +97,7 @@ class DecisionTree:
         else:
             return self._predict_one(x, node.right)
 
-# -------------------------
-# Auto Task Detection
-# -------------------------
-
+# task type detection
 def determine_task_type(y):
     unique_vals = np.unique(y)
     if y.dtype == 'object' or len(unique_vals) <= 10:
@@ -121,9 +114,6 @@ def evaluate_model(y_true, y_pred, task):
         mse = np.mean((y_true - y_pred) ** 2)
         return f"MSE: {mse:.4f}"
 
-# -------------------------
-# Main Execution
-# -------------------------
 
 def load_and_run_decision_tree(file_path, target_column):
     df = pd.read_csv(file_path)
@@ -161,14 +151,20 @@ def load_and_run_decision_tree(file_path, target_column):
     print(f"\nDecision Tree ({task.title()}) Results:")
     print(evaluate_model(y_test, y_pred, task))
 
-# -------------------------
-# Run the script
-# -------------------------
 
 if __name__ == "__main__":
-    # Try any dataset here
-    # load_and_run_decision_tree("datasets/heart_failure_clinical_records_dataset.csv", "DEATH_EVENT")
-    # load_and_run_decision_tree("datasets/robot_execution_failures_dataset.csv","Class")
+
+    #for Heart Failure Dataset
+    load_and_run_decision_tree("datasets/heart_failure_clinical_records_dataset.csv", "DEATH_EVENT")
+
+    #for Robot Execution Failures Dataset
+    load_and_run_decision_tree("datasets/robot_execution_failures_dataset.csv","Class")
+
+    #for Wisconsin Diagnostic Breast Cancer Dataset
     load_and_run_decision_tree("datasets/wisconsin_diagnostic_breast_cancer_dataset.csv","Diagnosis")
-    # load_and_run_decision_tree("datasets/mushroom_dataset.csv","class")
-    # load_and_run_decision_tree("datasets/glass_details_dataset.csv","Class")
+
+    #for Mushroom Dataset
+    load_and_run_decision_tree("datasets/mushroom_dataset.csv","class")
+
+    #for Glass Dataset
+    load_and_run_decision_tree("datasets/glass_details_dataset.csv","Class")

@@ -83,8 +83,26 @@ def confusion_matrix(y_true, y_pred_class):
 
 # Main
 if __name__ == "__main__":
+    
+    #for Glass dataset
     file_path = "datasets/glass_details_dataset.csv"
     target_col = "Class"
+
+    #for Heart Failure dataset
+    # file_path = "datasets/heart_failure_clinical_records_dataset.csv"
+    # target_col = "DEATH_EVENT"
+
+    # #for Robot Execution Failures dataset
+    # file_path = "datasets/robot_execution_failures_dataset.csv"
+    # target_col = "Class"
+
+    # #for Wisconsin Diagnostic Breast Cancer dataset
+    # file_path = "datasets/wisconsin_diagnostic_breast_cancer_dataset.csv"
+    # target_col = "Diagnosis"
+
+    # #for Mushroom dataset
+    # file_path = "datasets/mushroom_dataset.csv"
+    # target_col = "class"
 
     # Step 1: Load and preprocess
     X_train, X_test, y_train, y_test = load_and_preprocess_data(file_path, target_col)

@@ -79,13 +79,22 @@ def load_and_run_knn(file_path, target_column, k=3):
     print(f"\nKNN ({task.title()}) Results with k={k}:")
     print(evaluate_model(y_test, y_pred, task))
 
-# 🔍 Example call:
 if __name__ == "__main__":
+
+    #for Mushroom dataset
     load_and_run_knn("datasets/mushroom_dataset.csv", "class", k=7)
-    # load_and_run_knn("datasets/robot_execution_failures_dataset.csv", "Class", k=3)
-    # load_and_run_knn("datasets/wisconsin_diagnostic_breast_cancer_dataset.csv", "Diagnosis", k=6)
-    # load_and_run_knn("datasets/heart_failure_clinical_records_dataset.csv", "DEATH_EVENT", k=7)
-    # load_and_run_knn("datasets/glass_details_dataset.csv", "Class", k=9)
+
+    #for Robot Execution Failures dataset
+    load_and_run_knn("datasets/robot_execution_failures_dataset.csv", "Class", k=3)
+
+    #for Wisconsin Diagnostic Breast Cancer dataset
+    load_and_run_knn("datasets/wisconsin_diagnostic_breast_cancer_dataset.csv", "Diagnosis", k=6)
+
+    #for Heart Failure dataset
+    load_and_run_knn("datasets/heart_failure_clinical_records_dataset.csv", "DEATH_EVENT", k=7)
+
+    #for Glass dataset
+    load_and_run_knn("datasets/glass_details_dataset.csv", "Class", k=9)
 
 
 
