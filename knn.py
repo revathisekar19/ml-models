@@ -1,6 +1,8 @@
 import pandas as pd
 import numpy as np
+import sklearn as sk
 from collections import Counter
+from sklearn.metrics import confusion_matrix
 
 class KNN:
     def __init__(self, k=3, task="classification"):
@@ -36,6 +38,8 @@ def is_classification(y):
 def evaluate_model(y_true, y_pred, task):
     if task == "classification":
         accuracy = np.mean(y_true == y_pred)
+        print("Confusion Matrix:")
+        print(confusion_matrix(y_true, y_pred))
         return f"Accuracy: {accuracy:.4f}"
     else:
         mse = np.mean((y_true - y_pred) ** 2)
@@ -77,4 +81,11 @@ def load_and_run_knn(file_path, target_column, k=3):
 
 # 🔍 Example call:
 if __name__ == "__main__":
-    load_and_run_knn("datasets/heart_failure_clinical_records_dataset.csv", "DEATH_EVENT", k=5)
+    load_and_run_knn("datasets/mushroom_dataset.csv", "class", k=7)
+    # load_and_run_knn("datasets/robot_execution_failures_dataset.csv", "Class", k=3)
+    # load_and_run_knn("datasets/wisconsin_diagnostic_breast_cancer_dataset.csv", "Diagnosis", k=6)
+    # load_and_run_knn("datasets/heart_failure_clinical_records_dataset.csv", "DEATH_EVENT", k=7)
+    # load_and_run_knn("datasets/glass_details_dataset.csv", "Class", k=9)
+
+
+

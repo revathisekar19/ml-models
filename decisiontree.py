@@ -134,8 +134,11 @@ def load_and_run_decision_tree(file_path, target_column):
 
     # Encode categorical features
     for col in df.columns:
-        if df[col].dtype == 'object':
-            df[col], _ = pd.factorize(df[col])
+        # if df[col].dtype == 'object':
+        #     df[col], _ = pd.factorize(df[col])
+        if df[col].dtype == 'object' or col == target_column:
+            df[col], _ = pd.factorize(df[col].astype(str))
+
 
     X = df.iloc[:, :-1].values
     y = df.iloc[:, -1].values
@@ -164,4 +167,8 @@ def load_and_run_decision_tree(file_path, target_column):
 
 if __name__ == "__main__":
     # Try any dataset here
-    load_and_run_decision_tree("datasets/heart_failure_clinical_records_dataset.csv", "DEATH_EVENT")
+    # load_and_run_decision_tree("datasets/heart_failure_clinical_records_dataset.csv", "DEATH_EVENT")
+    # load_and_run_decision_tree("datasets/robot_execution_failures_dataset.csv","Class")
+    load_and_run_decision_tree("datasets/wisconsin_diagnostic_breast_cancer_dataset.csv","Diagnosis")
+    # load_and_run_decision_tree("datasets/mushroom_dataset.csv","class")
+    # load_and_run_decision_tree("datasets/glass_details_dataset.csv","Class")
