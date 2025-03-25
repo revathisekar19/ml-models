@@ -6,6 +6,11 @@ def load_and_preprocess_data(file_path, target_column, add_bias=True):
     # Load dataset
     df = pd.read_csv(file_path)
 
+    # Special case: robot dataset with time series data
+    if "robot" in file_path.lower():
+        df = extract_robot_features(df, target_column)
+    
+
     # Move target column to the end
     target = df.pop(target_column)
     df[target_column] = target
@@ -36,6 +41,23 @@ def load_and_preprocess_data(file_path, target_column, add_bias=True):
 
     split_idx = int(0.8 * len(X))
     return X[:split_idx], X[split_idx:], y[:split_idx], y[split_idx:]
+
+# Extract features from robot dataset
+def extract_robot_features(df, target_column):
+    signal_types = ['Fx', 'Fy', 'Fz', 'Tx', 'Ty', 'Tz']
+    features = {}
+
+    for sig in signal_types:
+        sig_cols = [col for col in df.columns if col.startswith(sig)]
+        values = df[sig_cols].values
+        features[f'{sig}_mean'] = values.mean(axis=1)
+        features[f'{sig}_var'] = values.var(axis=1)
+
+    features_df = pd.DataFrame(features)
+    features_df[target_column] = df[target_column].values
+    return features_df
+
+
 
 # Linear Regression using Gradient Descent
 def linear_regression_train_gd(X, y, lr=0.01, epochs=1000):
@@ -83,18 +105,18 @@ def confusion_matrix(y_true, y_pred_class):
 
 # Main
 if __name__ == "__main__":
-    
+
     #for Glass dataset
-    file_path = "datasets/glass_details_dataset.csv"
-    target_col = "Class"
+    # file_path = "datasets/glass_details_dataset.csv"
+    # target_col = "Class"
 
     #for Heart Failure dataset
-    # file_path = "datasets/heart_failure_clinical_records_dataset.csv"
-    # target_col = "DEATH_EVENT"
+    file_path = "datasets/heart_failure_clinical_records_dataset.csv"
+    target_col = "DEATH_EVENT"
 
     # #for Robot Execution Failures dataset
-    # file_path = "datasets/robot_execution_failures_dataset.csv"
-    # target_col = "Class"
+    file_path = "datasets/robot_dataset.csv"
+    target_col = "Class"
 
     # #for Wisconsin Diagnostic Breast Cancer dataset
     # file_path = "datasets/wisconsin_diagnostic_breast_cancer_dataset.csv"

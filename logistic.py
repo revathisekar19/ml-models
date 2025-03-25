@@ -7,6 +7,10 @@ import matplotlib.pyplot as plt
 def load_and_preprocess_data(file_path, target_column, add_bias=True):
     df = pd.read_csv(file_path)
 
+      # Special case: robot dataset with time series data
+    if "robot" in file_path.lower():
+        df = extract_robot_features(df, target_column)
+
     # Clean column names
     df.columns = df.columns.str.strip()
 
@@ -42,6 +46,21 @@ def load_and_preprocess_data(file_path, target_column, add_bias=True):
 
     split_idx = int(0.8 * len(X))
     return X[:split_idx], X[split_idx:], y[:split_idx], y[split_idx:]
+
+# Extract features from robot dataset
+def extract_robot_features(df, target_column):
+    signal_types = ['Fx', 'Fy', 'Fz', 'Tx', 'Ty', 'Tz']
+    features = {}
+
+    for sig in signal_types:
+        sig_cols = [col for col in df.columns if col.startswith(sig)]
+        values = df[sig_cols].values
+        features[f'{sig}_mean'] = values.mean(axis=1)
+        features[f'{sig}_var'] = values.var(axis=1)
+
+    features_df = pd.DataFrame(features)
+    features_df[target_column] = df[target_column].values
+    return features_df
 
 # Sigmoid function
 def sigmoid(z):
@@ -81,7 +100,7 @@ def evaluate_classification(y_true, y_pred):
 
 
 if __name__ == "__main__":
-    
+
     #for Glass dataset
     file_path = "datasets/glass_details_dataset.csv"
     target_col = "Class"
@@ -91,7 +110,7 @@ if __name__ == "__main__":
     # target_col = "DEATH_EVENT"
 
     # #for Robot Execution Failures dataset
-    # file_path = "datasets/robot_execution_failures_dataset.csv"
+    # file_path = "datasets/robot_dataset.csv"
     # target_col = "Class"
 
     # #for Wisconsin Diagnostic Breast Cancer dataset

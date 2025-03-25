@@ -47,6 +47,9 @@ def evaluate_model(y_true, y_pred, task):
 
 def load_and_run_knn(file_path, target_column, k=3):
     df = pd.read_csv(file_path)
+      # Special case: robot dataset with time series data
+    if "robot" in file_path.lower():
+        df = extract_robot_features(df, target_column)
     df.columns = df.columns.str.strip()
 
     y = df.pop(target_column)
@@ -79,22 +82,37 @@ def load_and_run_knn(file_path, target_column, k=3):
     print(f"\nKNN ({task.title()}) Results with k={k}:")
     print(evaluate_model(y_test, y_pred, task))
 
+    # Extract features from robot dataset
+def extract_robot_features(df, target_column):
+    signal_types = ['Fx', 'Fy', 'Fz', 'Tx', 'Ty', 'Tz']
+    features = {}
+
+    for sig in signal_types:
+        sig_cols = [col for col in df.columns if col.startswith(sig)]
+        values = df[sig_cols].values
+        features[f'{sig}_mean'] = values.mean(axis=1)
+        features[f'{sig}_var'] = values.var(axis=1)
+
+    features_df = pd.DataFrame(features)
+    features_df[target_column] = df[target_column].values
+    return features_df
+
 if __name__ == "__main__":
 
     #for Mushroom dataset
-    load_and_run_knn("datasets/mushroom_dataset.csv", "class", k=7)
+    # load_and_run_knn("datasets/mushroom_dataset.csv", "class", k=7)
 
     #for Robot Execution Failures dataset
-    load_and_run_knn("datasets/robot_execution_failures_dataset.csv", "Class", k=3)
+    # load_and_run_knn("datasets/robot_dataset.csv", "Class", k=3)
 
     #for Wisconsin Diagnostic Breast Cancer dataset
-    load_and_run_knn("datasets/wisconsin_diagnostic_breast_cancer_dataset.csv", "Diagnosis", k=6)
+    # load_and_run_knn("datasets/wisconsin_diagnostic_breast_cancer_dataset.csv", "Diagnosis", k=6)
 
     #for Heart Failure dataset
-    load_and_run_knn("datasets/heart_failure_clinical_records_dataset.csv", "DEATH_EVENT", k=7)
+    # load_and_run_knn("datasets/heart_failure_clinical_records_dataset.csv", "DEATH_EVENT", k=9)
 
     #for Glass dataset
-    load_and_run_knn("datasets/glass_details_dataset.csv", "Class", k=9)
+    load_and_run_knn("datasets/glass_details_dataset.csv", "Class", k=7)
 
 
 
