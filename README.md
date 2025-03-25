@@ -164,7 +164,7 @@
 # Additional Model
 
 Additionally tried to implement the LSTM for the forward propogation on the robot dataset since it is a time series dataset. But couldn't able to optimize the code to achieve the accuracy.
-
+![Model Accuracy Chart](lstm_accuracy.png)
 
 # Overall Accuracy Comparison for all the datasets over the algorithms
 
