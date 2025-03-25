@@ -67,7 +67,7 @@ def load_robot_lstm_data(file_path):
     if y.dtype == 'object':
         y, _ = pd.factorize(y)
 
-    # Create time series (Fx–Tz) → (15, 6)
+    # Create time series 
     features = ['Fx', 'Fy', 'Fz', 'Tx', 'Ty', 'Tz']
     n_timesteps = 15
     X_seq = []
@@ -77,10 +77,10 @@ def load_robot_lstm_data(file_path):
         for feat in features:
             values = [df.iloc[i][f"{feat}{t+1}"] for t in range(n_timesteps)]
             sample.append(values)
-        sample = np.array(sample).T  # (15, 6)
+        sample = np.array(sample).T  
         X_seq.append(sample)
 
-    X_seq = np.array(X_seq)  # (n_samples, 15, 6)
+    X_seq = np.array(X_seq)  
     y = np.array(y)
 
     return X_seq, y

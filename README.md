@@ -161,6 +161,10 @@
     #for Glass dataset
         load_and_run_naive_bayes("datasets/glass_details_dataset.csv","Class")
 
+# Additional Model
+
+    Additionally tried to implement the LSTM for the forward propogation on the robot dataset since it is a time series dataset. But couldn't able to optimize the code to achieve the accuracy.
+
 
 # Overall Accuracy Comparison for all the datasets over the algorithms
 
