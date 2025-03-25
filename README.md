@@ -164,6 +164,6 @@
 
 # Overall Accuracy Comparison for all the datasets over the algorithms
 
-
+![Model Accuracy Chart](Overall Accuracy.png)
 
 The grouped bar chart shows how each machine learning model performed across five datasets. KNN, Decision Tree, and Naive Bayes generally achieved high accuracy, especially on well-structured datasets like Mushroom and Breast Cancer. In contrast, Linear and Logistic Regression showed lower performance on multiclass datasets like Glass and Robot Failures, highlighting the importance of choosing the right model based on data type and complexity.
